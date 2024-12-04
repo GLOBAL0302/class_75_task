@@ -1,10 +1,11 @@
 import './App.css'
+import Message from './features/message/Message.tsx';
 
 const App = () => {
 
   return (
     <>
-      sd
+      <Message/>
     </>
   )
 };
