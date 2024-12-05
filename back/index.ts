@@ -7,15 +7,12 @@ const path = "./messages"
 
 const fs = require("fs");
 
-
-app.use(cors());
 app.use(express.json());
-app.use("/messages", messagesRouter)
+app.use(cors());
+app.use("/messages", messagesRouter);
 
 const run = async()=>{
-
     fs.existsSync(path) ? "" : fs.mkdirSync(path);
-
     app.listen(port, ()=>{
         console.log(`listening at http://localhost:${port}`);
     })

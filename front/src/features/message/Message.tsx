@@ -2,6 +2,8 @@ import {Button, Grid2, TextareaAutosize, Typography} from '@mui/material';
 import {useState} from 'react';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import {useAppDispatch,} from '../../app/hooks.ts';
+import {getDecodedMessageThunk, getEncodeMessageThunk} from './messageThunk.ts';
 
 
 const initialState={
@@ -12,22 +14,36 @@ const initialState={
 
 const Message = () => {
   const [messageForm, setMessageForm] = useState(initialState);
+  const dispatch = useAppDispatch();
+
+
 
   const onChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
 
     setMessageForm((prevState)=>({
       ...prevState,
       [e.target.name]:e.target.value,
-    }))
+    }));
   }
 
-  const onClickDecode = ()=>{
-    console.log(messageForm);
+  const onClickDecode = async()=>{
+    const newMessage = {
+      password:messageForm.passwordMessage,
+      message:messageForm.decodeMessage
+    }
+    await dispatch(getDecodedMessageThunk(newMessage));
+
   }
 
-  const onClickEncode = ()=>{
-    console.log(messageForm);
+  const onClickEncode = async ()=>{
+    const newMessage = {
+      password:messageForm.passwordMessage,
+      message:messageForm.encodeMessage
+    }
+    await dispatch(getEncodeMessageThunk(newMessage));
+
   }
+
 
   return (
     <>
